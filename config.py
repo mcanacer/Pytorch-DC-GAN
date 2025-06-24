@@ -41,9 +41,9 @@ def everything(args):
         transforms.Lambda(lambda t: (t * 2) - 1)  # Scale [-1, 1]
     ])
 
-    train_dataset = datasets.STL10(
+    '''train_dataset = datasets.CelebA(
         root='./data',
-        split='unlabeled',
+        split='train',
         download=True,
         transform=transform,
     )
@@ -53,7 +53,7 @@ def everything(args):
         batch_size=args.batch_size,
         shuffle=True,
         num_workers=args.num_workers,
-    )
+    )'''
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     gen = Generator(z_dim=args.z_dim, nfd=args.nfd, nc=args.num_channels).to(device).to(device)
@@ -73,7 +73,7 @@ def everything(args):
     )
 
     return {
-        'train_loader': train_loader,
+        #'train_loader': train_loader,
         'gen': gen,
         'disc': disc,
         'loss': loss,
@@ -86,3 +86,4 @@ def everything(args):
         'gen_checkpoint_path': args.gen_checkpoint_path,
         'disc_checkpoint_path': args.disc_checkpoint_path,
     }
+
